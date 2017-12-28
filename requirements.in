@@ -1,0 +1,4 @@
+PyAudio
+google-assistant-grpc
+google-assistant-sdk[samples]
+google-auth-oauthlib[tool]
