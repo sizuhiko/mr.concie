@@ -1,4 +1,5 @@
 # mr.concie
+
 Custom SmartHome made by Google AIY
 
 ## Requirements
@@ -18,12 +19,38 @@ Please check and install the libraries.
 
 ## Install
 
+### Install dependencies
+
 ```
 # install snowboy
 $ npm install
 # install Google Assistant SDK
 $ pip-sync
 ```
+
+### Generate your HOTWORD
+
+Generate your HOTWORD for starting your google assistant app. 
+HOTWORD can generate with (snowboy HOTWORD DETECTION)[https://snowboy.kitt.ai/].
+Generate and download your HOTWORD, rename to `hotword.pmdl` and put to the app root.
+
+### Environment
+
+Copy `.env.sample` to `.env`, and edit configurations followings.
+
+- `ASSISTANT_APP_NAME` Your Google Assistant Application name
+- `TTS_LANG` Speak interaction response from your assistant app by the Language
+- `ASSISTANT_LANGUAGE_CODE` Google Assistant Application interaction language
+- `ASSISTANT_APP_INTERACTION` Interaction keyword depends your language
+
+## Run
+
+```
+$ python main.py
+```
+
+Please say your HOTWORD like a `OK, Google`.
+Enjoy !
 
 ## Troubleshooting
 

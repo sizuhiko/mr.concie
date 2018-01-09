@@ -2,3 +2,7 @@ PyAudio
 google-assistant-grpc
 google-assistant-sdk[samples]
 google-auth-oauthlib[tool]
+gTTS
+pygame
+mutagen
+python-dotenv

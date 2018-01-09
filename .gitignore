@@ -168,4 +168,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-
+# mr.concie
+hotword.pmdl
+welcome.mp3
+.DS_Store
