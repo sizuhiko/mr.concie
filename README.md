@@ -31,7 +31,7 @@ $ pip-sync
 ### Generate your HOTWORD
 
 Generate your HOTWORD for starting your google assistant app. 
-HOTWORD can generate with (snowboy HOTWORD DETECTION)[https://snowboy.kitt.ai/].
+HOTWORD can generate with [snowboy HOTWORD DETECTION](https://snowboy.kitt.ai/).
 Generate and download your HOTWORD, rename to `hotword.pmdl` and put to the app root.
 
 ### Environment
