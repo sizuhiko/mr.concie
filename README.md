@@ -25,7 +25,7 @@ Please check and install the libraries.
 # install snowboy
 $ npm install
 # install Google Assistant SDK
-$ pip-sync
+$ pip install -r requirements.txt
 ```
 
 ### Generate your HOTWORD
