@@ -44,9 +44,9 @@ def play_audio_file(fname=DETECT_DING):
     :return: None
     """
 
-    mixer.init(frequency = 36100)
+    mixer.init()
     mixer.music.load(fname)
-    mixer.music.set_volume(settings.VOLUME / 100)
+    mixer.music.set_volume(settings.VOLUME / 200)
     mixer.music.play()
     time.sleep(1)
     mixer.music.stop()
