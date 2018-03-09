@@ -290,21 +290,11 @@ def init_google_assistant():
 
     device_handler = device_helpers.DeviceRequestHandler(None)
 
-    device_config = os.path.join(click.get_app_dir('googlesamples-assistant'), 'device_config.json')
-    try:
-        with open(device_config) as f:
-            device = json.load(f)
-            device_id = device['id']
-            device_model_id = device['model_id']
-    except Exception as e:
-        logging.warning('Device config not found: %s' % e)
-        sys.exit(-1)
-
-    return [device_model_id, device_id, conversation_stream, grpc_channel, device_handler, audio_device]
+    return [conversation_stream, grpc_channel, device_handler, audio_device]
 
 
 logging.basicConfig(level=logging.DEBUG)
-device_model_id, device_id, conversation_stream, grpc_channel, device_handler, audio_device = init_google_assistant()
+conversation_stream, grpc_channel, device_handler, audio_device = init_google_assistant()
 
 # capture SIGINT signal, e.g., Ctrl+C
 signal.signal(signal.SIGINT, signal_handler)
@@ -313,7 +303,7 @@ detector = snowboydecoder.HotwordDetector("hotword.pmdl", sensitivity=0.5)
 print('Listening... Press Ctrl+C to exit')
 
 # main loop
-with MrConcie(settings.ASSISTANT_LANGUAGE_CODE, device_model_id, device_id,
+with MrConcie(settings.ASSISTANT_LANGUAGE_CODE, settings.DEVICE_MODEL_ID, settings.DEVICE_ID,
                      conversation_stream,
                      grpc_channel, DEFAULT_GRPC_DEADLINE,
                      device_handler) as assistant:
