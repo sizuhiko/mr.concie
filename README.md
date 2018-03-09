@@ -107,6 +107,7 @@ Copy `.env.sample` to `.env`, and edit configurations followings.
 - `ASSISTANT_APP_INTERACTION` Interaction keyword depends your language
 - `DEVICE_ID` Your Device ID
 - `DEVICE_MODEL_ID` Your Device Model ID
+- `VOLUME` Average of Volume (1 - 100), Recommend 70.
 
 ## Run
 

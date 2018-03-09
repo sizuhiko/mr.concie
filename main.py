@@ -235,6 +235,7 @@ class MrConcie(object):
         mp3 = mutagen.mp3.MP3(welcome_file)
         mixer.init(frequency=int(mp3.info.sample_rate * 1.1))
         mixer.music.load(welcome_file)
+        mixer.music.set_volume(self.conversation_stream.volume_percentage / 100)
         mixer.music.play()
 
         while True:
@@ -287,6 +288,7 @@ def init_google_assistant():
         iter_size=audio_helpers.DEFAULT_AUDIO_ITER_SIZE,
         sample_width=audio_helpers.DEFAULT_AUDIO_SAMPLE_WIDTH,
     )
+    conversation_stream.volume_percentage = settings.VOLUME;
 
     device_handler = device_helpers.DeviceRequestHandler(None)
 

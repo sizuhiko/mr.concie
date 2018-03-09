@@ -7,6 +7,8 @@ import time
 import wave
 import os
 import logging
+from pygame import mixer
+import settings
 
 logging.basicConfig()
 logger = logging.getLogger("snowboy")
@@ -41,20 +43,13 @@ def play_audio_file(fname=DETECT_DING):
     :param str fname: wave file name
     :return: None
     """
-    ding_wav = wave.open(fname, 'rb')
-    ding_data = ding_wav.readframes(ding_wav.getnframes())
-    audio = pyaudio.PyAudio()
-    stream_out = audio.open(
-        format=audio.get_format_from_width(ding_wav.getsampwidth()),
-        channels=ding_wav.getnchannels(),
-        rate=ding_wav.getframerate(), input=False, output=True)
-    stream_out.start_stream()
-    stream_out.write(ding_data)
-    time.sleep(0.2)
-    stream_out.stop_stream()
-    stream_out.close()
-    audio.terminate()
 
+    mixer.init(frequency = 36100)
+    mixer.music.load(fname)
+    mixer.music.set_volume(settings.VOLUME / 100)
+    mixer.music.play()
+    time.sleep(1)
+    mixer.music.stop()
 
 class HotwordDetector(object):
     """
