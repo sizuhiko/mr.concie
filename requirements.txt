@@ -4,35 +4,37 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-cachetools==2.0.1         # via google-auth
-certifi==2017.11.5        # via requests, urllib3
-cffi==1.11.2              # via sounddevice
+beautifulsoup4==4.6.3     # via bs4
+bs4==0.0.1                # via gtts
+cachetools==2.1.0         # via google-auth
+certifi==2018.8.24        # via requests, urllib3
+cffi==1.11.5              # via sounddevice
 chardet==3.0.4            # via requests
-click==6.7                # via google-assistant-sdk, google-auth-oauthlib, python-dotenv
+click==6.7                # via google-assistant-sdk, google-auth-oauthlib, gtts
 futures==3.1.1            # via google-assistant-sdk
-google-assistant-grpc==0.1.0
-google-assistant-sdk[samples]==0.4.1
+google-assistant-grpc==0.2.0
+google-assistant-sdk[samples]==0.5.0
 google-auth-oauthlib[tool]==0.2.0
-google-auth==1.2.1        # via google-auth-oauthlib
+google-auth==1.5.1        # via google-auth-oauthlib
 googleapis-common-protos==1.5.3  # via google-assistant-grpc
-grpcio==1.8.2             # via google-assistant-grpc
+grpcio==1.15.0            # via google-assistant-grpc
 gtts-token==1.1.1         # via gtts
-gtts==1.2.2
-idna==2.6                 # via requests
-monotonic==1.4            # via tenacity
-mutagen==1.39
-oauthlib==2.0.6           # via requests-oauthlib
-protobuf==3.5.1           # via googleapis-common-protos, grpcio
-pyasn1-modules==0.2.1     # via google-auth
-pyasn1==0.4.2             # via google-auth, pyasn1-modules, rsa
+gtts==2.0.1
+idna==2.7                 # via requests
+mutagen==1.41.1
+oauthlib==2.1.0           # via requests-oauthlib
+pathlib2==2.3.2           # via google-assistant-sdk
+protobuf==3.6.1           # via googleapis-common-protos
+pyasn1-modules==0.2.2     # via google-auth
+pyasn1==0.4.4             # via pyasn1-modules, rsa
 pyaudio==0.2.11
 pycparser==2.18           # via cffi
-pygame==1.9.3
-python-dotenv==0.7.1
-requests-oauthlib==0.8.0  # via google-auth-oauthlib
-requests==2.18.4          # via gtts, gtts-token, requests-oauthlib
+pygame==1.9.4
+python-dotenv==0.9.1
+requests-oauthlib==1.0.0  # via google-auth-oauthlib
+requests==2.19.1          # via gtts, gtts-token, requests-oauthlib
 rsa==3.4.2                # via google-auth
-six==1.11.0               # via google-auth, grpcio, gtts, protobuf, tenacity
-sounddevice==0.3.10       # via google-assistant-sdk
-tenacity==4.8.0           # via google-assistant-sdk
-urllib3[secure]==1.22     # via google-assistant-sdk, requests
+six==1.11.0               # via google-auth, grpcio, gtts, pathlib2, protobuf, tenacity
+sounddevice==0.3.12       # via google-assistant-sdk
+tenacity==4.12.0          # via google-assistant-sdk
+urllib3[secure]==1.23     # via google-assistant-sdk, requests
