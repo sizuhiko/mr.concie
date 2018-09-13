@@ -74,6 +74,8 @@ class MrConcie(object):
         # This value, along with MicrophoneMode, supports a more natural
         # "conversation" with the Assistant.
         self.conversation_state = None
+        # Force reset of first conversation.
+        self.is_new_conversation = True
 
         # Create Google Assistant API gRPC client.
         self.assistant = embedded_assistant_pb2_grpc.EmbeddedAssistantStub(
@@ -115,7 +117,7 @@ class MrConcie(object):
             for c in self.gen_assist_requests():
                 assistant_helpers.log_assist_request_without_audio(c)
                 yield c
-            self.conversation_stream.start_playback()
+            logging.debug('Reached end of AssistRequest iteration.')
 
         # This generator yields AssistResponse proto messages
         # received from the gRPC Google Assistant API.
@@ -124,13 +126,17 @@ class MrConcie(object):
             assistant_helpers.log_assist_response_without_audio(resp)
             if resp.event_type == END_OF_UTTERANCE:
                 logging.info('End of audio request detected')
+                logging.info('Stopping recording.')
                 self.conversation_stream.stop_recording()
             if resp.speech_results:
                 logging.info('Transcript of user request: "%s".',
                              ' '.join(r.transcript
                                       for r in resp.speech_results))
-                logging.info('Playing assistant response.')
             if len(resp.audio_out.audio_data) > 0:
+                if not self.conversation_stream.playing:
+                    self.conversation_stream.stop_recording()
+                    self.conversation_stream.start_playback()
+                    logging.info('Playing assistant response.')
                 self.conversation_stream.write(resp.audio_out.audio_data)
             if resp.dialog_state_out.conversation_state:
                 conversation_state = resp.dialog_state_out.conversation_state
@@ -166,11 +172,9 @@ class MrConcie(object):
 
         dialog_state_in = embedded_assistant_pb2.DialogStateIn(
             language_code=self.language_code,
-            conversation_state=b''
+            conversation_state=self.conversation_state,
+            is_new_conversation=self.is_new_conversation,
         )
-        if self.conversation_state:
-            logging.debug('Sending conversation state.')
-            dialog_state_in.conversation_state = self.conversation_state
         config = embedded_assistant_pb2.AssistConfig(
             audio_in_config=embedded_assistant_pb2.AudioInConfig(
                 encoding='LINEAR16',
@@ -187,6 +191,8 @@ class MrConcie(object):
                 device_model_id=self.device_model_id,
             )
         )
+        # Continue current conversation with later requests.
+        self.is_new_conversation = False
         # The first AssistRequest must contain the AssistConfig
         # and no audio data.
         yield embedded_assistant_pb2.AssistRequest(config=config)
@@ -198,10 +204,9 @@ class MrConcie(object):
         def iter_assist_requests():
             dialog_state_in = embedded_assistant_pb2.DialogStateIn(
                 language_code=self.language_code,
-                conversation_state=b''
+                conversation_state=self.conversation_state,
+                is_new_conversation=self.is_new_conversation,
             )
-            if self.conversation_state:
-                dialog_state_in.conversation_state = self.conversation_state
             config = embedded_assistant_pb2.AssistConfig(
                 audio_out_config=embedded_assistant_pb2.AudioOutConfig(
                     encoding='LINEAR16',
@@ -215,6 +220,8 @@ class MrConcie(object):
                 ),
                 text_query=text_query,
             )
+            # Continue current conversation with later requests.
+            self.is_new_conversation = False
             req = embedded_assistant_pb2.AssistRequest(config=config)
             assistant_helpers.log_assist_request_without_audio(req)
             yield req
@@ -223,6 +230,8 @@ class MrConcie(object):
         for resp in self.assistant.Assist(iter_assist_requests(),
                                           self.deadline):
             assistant_helpers.log_assist_response_without_audio(resp)
+            if resp.screen_out.data:
+                display_text = resp.screen_out.data
             if resp.dialog_state_out.conversation_state:
                 conversation_state = resp.dialog_state_out.conversation_state
                 self.conversation_state = conversation_state
