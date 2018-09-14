@@ -322,6 +322,14 @@ def onoff(on):
     else:
         print('Turning device off')
 
+@device_handler.command('com.example.commands.TvOn')
+def tv_on():
+    print('TV on')
+
+@device_handler.command('com.example.commands.TvOff')
+def tv_off():
+    print('TV off')
+
 # main loop
 with MrConcie(settings.ASSISTANT_LANGUAGE_CODE, settings.DEVICE_MODEL_ID, settings.DEVICE_ID,
                      conversation_stream,

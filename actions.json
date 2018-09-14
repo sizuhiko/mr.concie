@@ -1,0 +1,87 @@
+{
+    "manifest": {
+        "displayName": "Custom SmartHOME",
+        "invocationName": "Custom SmartHOME",
+        "category": "PRODUCTIVITY"
+    },
+    "actions": [
+        {
+            "name": "com.example.actions.TvOn",
+            "availability": {
+                "deviceClasses": [
+                    {
+                        "assistantSdkDevice": {}
+                    }
+                ]
+            },
+            "intent": {
+                "name": "com.example.intents.TvOn",
+                "trigger": {
+                    "queryPatterns": [
+                        "TVつけて",
+                        "テレビつけて",
+                        "TVの電源を入れて",
+                        "テレビの電源を入れて"
+                    ]
+                }
+            },
+            "fulfillment": {
+                "staticFulfillment": {
+                    "templatedResponse": {
+                        "items": [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": "テレビの電源を入れます"
+                                }
+                            },
+                            {
+                                "deviceExecution": {
+                                    "command": "com.example.commands.TvOn"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            "name": "com.example.actions.TvOff",
+            "availability": {
+                "deviceClasses": [
+                    {
+                        "assistantSdkDevice": {}
+                    }
+                ]
+            },
+            "intent": {
+                "name": "com.example.intents.TvOff",
+                "trigger": {
+                    "queryPatterns": [
+                        "TV消して",
+                        "テレビ消して",
+                        "TVの電源を消して",
+                        "テレビの電源を消して"
+                    ]
+                }
+            },
+            "fulfillment": {
+                "staticFulfillment": {
+                    "templatedResponse": {
+                        "items": [
+                            {
+                                "simpleResponse": {
+                                    "textToSpeech": "テレビの電源を消します"
+                                }
+                            },
+                            {
+                                "deviceExecution": {
+                                    "command": "com.example.commands.TvOff"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}
