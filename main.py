@@ -321,7 +321,8 @@ with MrConcie(settings.ASSISTANT_LANGUAGE_CODE, settings.DEVICE_MODEL_ID, settin
     def detected_callback():
         snowboydecoder.play_audio_file()
 
-        response_text = assistant.start_app(text_query=settings.ASSISTANT_APP_INTERACTION.format(assistant_app_name=settings.ASSISTANT_APP_NAME))
+        if settings.ASSISTANT_APP_INTERACTION:
+            response_text = assistant.start_app(text_query=settings.ASSISTANT_APP_INTERACTION.format(assistant_app_name=settings.ASSISTANT_APP_NAME))
         while True:
             continue_conversation = assistant.assist()
             if not continue_conversation:
