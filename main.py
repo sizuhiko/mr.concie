@@ -313,6 +313,15 @@ signal.signal(signal.SIGINT, signal_handler)
 detector = snowboydecoder.HotwordDetector("hotword.pmdl", sensitivity=0.5)
 print('Listening... Press Ctrl+C to exit')
 
+device_handler = device_helpers.DeviceRequestHandler(settings.DEVICE_ID)
+
+@device_handler.command('action.devices.commands.OnOff')
+def onoff(on):
+    if on:
+        print('Turning device on')
+    else:
+        print('Turning device off')
+
 # main loop
 with MrConcie(settings.ASSISTANT_LANGUAGE_CODE, settings.DEVICE_MODEL_ID, settings.DEVICE_ID,
                      conversation_stream,
